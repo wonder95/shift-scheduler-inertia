@@ -1,9 +1,9 @@
 <template>
-    Station: {{ stationNum }}
-    <ShiftPerson v-for="item in shifts"
-        :item="item"
-        :date="date"
-    ></ShiftPerson>
+    <span class="font-bold">{{ stationNum }}</span>
+        <ShiftPerson v-for="item in shifts"
+            :item="item"
+            :date="date"
+        ></ShiftPerson>
 </template>
 
 <script>
@@ -27,7 +27,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

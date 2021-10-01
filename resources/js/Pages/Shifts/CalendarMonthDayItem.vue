@@ -3,7 +3,7 @@
         class="relative calendar-day min-h-calendar text-base p-2"
         :class="{
         'text-gray-500 bg-gray-200': !day.isCurrentMonth,
-        'pt-3 border border-green-500 border-2': isToday
+        'pt-3 border border-green-500 border-8': isToday
     }"
     >
         <span

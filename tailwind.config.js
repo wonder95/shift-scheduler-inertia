@@ -15,7 +15,8 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             minHeight: {
-                calendar: '100px'
+                calendar: '100px',
+                person: '20px'
             }
         },
     },

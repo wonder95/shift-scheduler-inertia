@@ -1,15 +1,19 @@
 <template>
-    <div class="flex justify-center">
-        <button class="text-red-600 hover:underline block" tabindex="-1"
-                type="button"
-                @click="linkActionMethod"
+    <div class="flex justify-center px-10 mt-1">
+        <button v-if="!isBefore"
+            class="text-red-600 text-sm hover:underline block" tabindex="-1"
+            type="button"
+            @click="runAction(linkActionMethod)"
         >
             {{ signupText }}
         </button>
+        <div class="min-h-person" v-else>{{ signupText }}</div>
     </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
+
 export default {
     name: 'ShiftPerson',
     props: {
@@ -22,13 +26,31 @@ export default {
     },
     computed: {
         signupText() {
-            return this.item.hasOwnProperty('id') ? this.item.user.name : 'Sign Up';
+            let text = '';
+            if (this.item.hasOwnProperty('id')) {
+                text = this.item.user.name
+            } else {
+              if (this.isBefore){
+                  text = '';
+              } else {
+                  text = 'Sign Up';
+              }
+            }
+
+            return text;
         },
         linkActionMethod(){
             return this.item.hasOwnProperty('id') ? 'destroy' : 'signup';
+        },
+        isBefore() {
+            const before = dayjs(this.date).isBefore(dayjs(), 'day');
+            return before;
         }
     },
     methods: {
+        runAction(method) {
+          this[method]();
+        },
         destroy() {
             if (confirm('Are you sure you want to delete this shift?')) {
                 this.$inertia.delete(this.route('shifts.delete', this.item.id))
@@ -36,7 +58,7 @@ export default {
         },
         signup() {
             const signupData = {
-                user_id: this.user.id,
+                user_id: this.$page.props.user.id,
                 date: this.date,
                 station_id: this.item.station_id,
                 am_pm: this.item.am_pm,

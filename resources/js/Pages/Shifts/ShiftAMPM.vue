@@ -1,11 +1,13 @@
 <template>
-    <div :class="bgClass">
+    <div :class="bgClass" class="py-2">
         <div>{{ time.toUpperCase() }}</div>
-        <ShiftStation v-for="(station, id) in stations"
-            :shifts="stations[id]"
-            :station-num="id"
-            :date="date"
-        ></ShiftStation>
+        <span class="divide-y divide-gray-800">
+            <ShiftStation v-for="(station, id) in stations"
+                :shifts="stations[id]"
+                :station-num="id"
+                :date="date"
+            ></ShiftStation>
+        </span>
     </div>
 </template>
 
@@ -32,7 +34,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
