@@ -65,9 +65,11 @@ class ShiftController extends Controller
             'am_pm' => ['required']
         ]);
 
+        $redirect_route = request('redirectRoute') ?: 'shifts.index';
+
         Shift::create($attributes);
 
-        return Redirect::route('shifts.index')->with('success', 'Your shift has been created');
+        return Redirect::route($redirect_route)->with('success', 'Your shift has been created');
     }
 
     public function delete(Shift $shift)

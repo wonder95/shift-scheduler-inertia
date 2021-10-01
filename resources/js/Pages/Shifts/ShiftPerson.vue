@@ -39,7 +39,8 @@ export default {
                 user_id: this.user.id,
                 date: this.date,
                 station_id: this.item.station_id,
-                am_pm: this.item.am_pm
+                am_pm: this.item.am_pm,
+                redirectRoute: 'shifts.calendar'
             }
 
             this.$inertia.post(this.route('shifts.store', signupData))
