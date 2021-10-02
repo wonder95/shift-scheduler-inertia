@@ -8,7 +8,7 @@
     >
         <span
             :class="{'bg-blue-900 text-white rounded-full p-3': isToday }"
-            class="flex justify-center items-center absolute right-0.5 w-5 h-5"
+            class="flex justify-center items-center absolute right-2 font-bold w-5 h-5"
         >
             {{ label }}
         </span>
