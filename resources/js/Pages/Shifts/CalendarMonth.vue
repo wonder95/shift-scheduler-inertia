@@ -104,7 +104,6 @@ export default {
 
                 if (this.shifts.hasOwnProperty(date)) {
                     dateObj.shifts = this.mergeShifts(this.shifts[date], date);
-                    // dateObj.shifts = this.shifts[date];
                 } else {
                     dateObj.shifts = this.generateShiftStructure();
                 }
@@ -136,35 +135,55 @@ export default {
 
             return [...Array(visibleNumberOfDaysFromPreviousMonth)].map(
                 (day, index) => {
-                    return {
-                        date: dayjs(
-                            `${previousMonth.year()}-${previousMonth.month() +
-                            1}-${previousMonthLastMondayDayOfMonth + index}`
-                        ).format("YYYY-MM-DD"),
+                    const date = dayjs(
+                        `${previousMonth.year()}-${previousMonth.month() +
+                        1}-${previousMonthLastMondayDayOfMonth + index}`
+                    ).format("YYYY-MM-DD");
+
+                    let dateObj = {
+                        date: date,
                         isCurrentMonth: false
                     };
+
+                    if (this.shifts.hasOwnProperty(date)) {
+                        dateObj.shifts = this.mergeShifts(this.shifts[date], date);
+                    } else {
+                        dateObj.shifts = this.generateShiftStructure();
+                    }
+
+                    return dateObj;
                 }
             );
         },
 
         nextMonthDays() {
             const lastDayOfTheMonthWeekday = this.getWeekday(
-                `${this.year}-${this.month}-${this.currentMonthDays.length}`
+                `${this.year}-${this.month}-${this.currentMonthDays.length + 1}`
             );
 
             const nextMonth = dayjs(`${this.year}-${this.month}-01`).add(1, "month");
 
             const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday
-                ? 6 - lastDayOfTheMonthWeekday
+                ? 7 - lastDayOfTheMonthWeekday
                 : lastDayOfTheMonthWeekday;
 
             return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
-                return {
-                    date: dayjs(
-                        `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
-                    ).format("YYYY-MM-DD"),
+                const date = dayjs(
+                    `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
+                ).format("YYYY-MM-DD");
+
+                let dateObj = {
+                    date: date,
                     isCurrentMonth: false
                 };
+
+                if (this.shifts.hasOwnProperty(date)) {
+                    dateObj.shifts = this.mergeShifts(this.shifts[date], date);
+                } else {
+                    dateObj.shifts = this.generateShiftStructure();
+                }
+
+                return dateObj;
             });
         }
     },
@@ -225,7 +244,8 @@ export default {
                 data: {
                     newMonth: newMonth,
                     newYear: newYear
-                }
+                },
+                only: ['shifts']
             });
         }
     }
