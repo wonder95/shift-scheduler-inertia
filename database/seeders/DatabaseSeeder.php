@@ -18,14 +18,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Steve Edwards',
-            'email' => 'steve.edwards@clackamasfire.com',
+            'name' => 'Joe Blow',
+            'email' => 'joe.blow@' . env('EMAIL_DOMAIN'),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
         ]);
 
         User::create([
-            'name' => 'Steve Deters',
-            'email' => 'steve.deters@clackamasfire.com',
+            'name' => 'Admin User',
+            'email' => 'admin.user@' . env('EMAIL_DOMAIN'),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
             'type' => 'admin'
         ]);
