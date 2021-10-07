@@ -75,4 +75,16 @@ class User extends Authenticatable
     public function shifts() {
         return $this->hasMany(Shift::class);
     }
+
+    public function isAdmin() {
+        return $this->type === 'admin';
+    }
+
+    public function isSuppression() {
+        return $this->type === 'suppression';
+    }
+
+    public function isSupport() {
+        return $this->type === 'support';
+    }
 }
