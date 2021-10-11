@@ -37,6 +37,7 @@ import CalendarMonthDayItem from "./CalendarMonthDayItem";
 import CalendarDateIndicator from "./CalendarDateIndicator";
 import CalendarDateSelector from "./CalendarDateSelector";
 import CalendarWeekdays from "./CalendarWeekdays";
+import { mapActions } from 'vuex';
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
@@ -189,6 +190,9 @@ export default {
     },
 
     methods: {
+        ...mapActions('users', {
+            loadUsers: 'loadUsers'
+        }),
         generateShiftStructure() {
             let structure = {};
 
@@ -248,6 +252,9 @@ export default {
                 only: ['shifts']
             });
         }
+    },
+    mounted() {
+        this.loadUsers();
     }
 };
 </script>

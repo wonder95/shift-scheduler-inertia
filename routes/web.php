@@ -53,6 +53,10 @@ Route::get('users', [UserController::class, 'index'])
     ->name('users.index')
     ->middleware('auth');
 
+Route::get('users/list', [UserController::class, 'userList'])
+    ->name('users.list')
+    ->middleware('auth');
+
 Route::get('users/create', [UserController::class, 'create'])
     ->name('users.create')
     ->middleware('auth');

@@ -18,6 +18,10 @@ class UserController extends Controller
         ]);
     }
 
+    public function userList() {
+        return User::all();
+    }
+
     public function create()
     {
         return Inertia::render('Users/CreateJS', [
