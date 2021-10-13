@@ -24,6 +24,7 @@ class CreateShiftsTable extends Migration
                 ->references('id')
                 ->on('stations');
             $table->enum('am_pm', ['am', 'pm'])->default('pm');
+            $table->boolean('unavailable');
             $table->timestamps();
         });
     }
