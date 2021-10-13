@@ -20,9 +20,12 @@
         </button>
 
         <AdminUserAddShiftModal
-            :initial-open="isOpen"
+            :is-open="isOpen"
             @closeModal="closeModal"
             @addShift="signup"
+            :date="date"
+            :station="item.station.station_number"
+            :am_pm="item.am_pm"
         >
         </AdminUserAddShiftModal>
     </div>
@@ -116,7 +119,7 @@ export default {
                 redirectRoute: 'shifts.calendar'
             }
 
-            this.$inertia.post(this.route('shifts.store', signupData))
+            this.$inertia.post(this.route('shifts.store', signupData, {preserveScroll: true}))
 
             this.closeModal();
         }

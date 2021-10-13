@@ -1,5 +1,5 @@
 <template>
-    <TransitionRoot as="template" :show="initialOpen">
+    <TransitionRoot as="template" :show="isOpen">
         <Dialog as="div" class="fixed z-10 inset-0 overflow-y-auto" @close="openModal">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
@@ -17,7 +17,12 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
-                                <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
+                                <div class="mx-auto flex flex-col items-center justify-center">
+                                    <span>Date: {{ date }}</span>
+                                    <span>Station: {{ station }}</span>
+                                    <span>AM/PM: {{ am_pm.toUpperCase() }}</span>
+                                </div>
+                                <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900 mt-4">
                                     Select Person
                                 </DialogTitle>
                                 <div class="sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -25,7 +30,7 @@
                                         Person
                                     </label>
                                     <div class="mt-2 sm:mt-0 sm:col-span-2">
-                                        <select
+                                        <select :disabled="selectDisabled"
                                             v-model="userId"
                                             id="user_id" name="user_id" autocomplete="user_id" class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                                             <option selected="selected" value="">Select Person</option>
@@ -35,6 +40,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <label class="mt-6 select-none flex items-center" for="doNotFill">
+                                    <input id="doNotFill" v-model="doNotfill" class="mr-1" type="checkbox"
+                                        @change="selectDoNotFill"
+                                    />
+                                    <span class="text-sm">Do Not Fill</span>
+                                </label>
                             </div>
                         </div>
                         <div class="mt-5 sm:mt-6">
@@ -60,24 +71,28 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import { mapGetters } from 'vuex'
-
-
+import Checkbox from "@/Jetstream/Checkbox";
 
 export default {
     name: 'AdminUserAddShiftModal',
     data() {
         return {
-            isOpen: this.initialOpen,
-            userId: null
+            userId: null,
+            doNotFill: false,
+            selectDisabled: false
         }
     },
     props: {
-        initialOpen: {
+        isOpen: {
             type: Boolean,
             required: true
-        }
+        },
+        date: String,
+        station: Number,
+        am_pm: String
     },
     components: {
+        Checkbox,
         TransitionRoot,
         TransitionChild,
         Dialog,
@@ -92,10 +107,13 @@ export default {
     methods: {
         closeModal() {
             this.$emit('closeModal');
-            // this.initialOpen = false;
         },
         addShift() {
-            this.$emit('addShift', this.userId)
+            this.$emit('addShift', this.userId, this.doNotFill)
+        },
+        selectDoNotFill() {
+            this.userId = this.userId ? null : this.userId;
+            this.selectDisabled = !this.selectDisabled;
         }
     }
 }
