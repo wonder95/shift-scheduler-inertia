@@ -11,7 +11,7 @@ class Shift extends Model
 {
     use HasFactory;
 
-    protected $fillable=['date', 'user_id', 'station_id', 'am_pm'];
+    protected $fillable=['date', 'user_id', 'station_id', 'am_pm', 'unavailable'];
 
     public function user()
     {

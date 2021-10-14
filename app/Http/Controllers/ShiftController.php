@@ -59,10 +59,11 @@ class ShiftController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'user_id' => ['required'],
+            'user_id' => ['exclude_if:unavailable,true'],
             'date' =>  ['required'],
             'station_id' => ['required'],
-            'am_pm' => ['required']
+            'am_pm' => ['required'],
+            'unavailable' => ['boolean']
         ]);
 
         $redirect_route = request('redirectRoute') ?: 'shifts.index';

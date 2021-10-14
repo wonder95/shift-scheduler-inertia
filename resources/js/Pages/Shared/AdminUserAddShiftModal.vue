@@ -40,11 +40,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <label class="mt-6 select-none flex items-center" for="doNotFill">
-                                    <input id="doNotFill" v-model="doNotfill" class="mr-1" type="checkbox"
+                                <label class="mt-6 select-none flex items-center" for="unavailable">
+                                    <input id="unavailable" v-model="unavailable" class="mr-1" type="checkbox"
                                         @change="selectDoNotFill"
                                     />
-                                    <span class="text-sm">Do Not Fill</span>
+                                    <span class="text-sm ml-2">Unavailable</span>
                                 </label>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ export default {
     data() {
         return {
             userId: null,
-            doNotFill: false,
+            unavailable: false,
             selectDisabled: false
         }
     },
@@ -109,7 +109,7 @@ export default {
             this.$emit('closeModal');
         },
         addShift() {
-            this.$emit('addShift', this.userId, this.doNotFill)
+            this.$emit('addShift', this.userId, this.unavailable)
         },
         selectDoNotFill() {
             this.userId = this.userId ? null : this.userId;

@@ -62,7 +62,7 @@ export default {
         signupText() {
             let text = '';
             if (this.item.hasOwnProperty('id')) {
-                text = this.item.user.name
+                text = this.item.user_id ?  this.item.user.name : 'Unavailable';
             } else if (!this.isBefore) {
                 if (this.userIsAdmin) {
                     return 'Add User';
@@ -108,14 +108,20 @@ export default {
                 this.$inertia.delete(this.route('shifts.delete', this.item.id))
             }
         },
-        signup(modalUserId = null) {
-            const user_id = modalUserId ?  modalUserId: this.$page.props.user.id;
+        signup(modalUserId = null, unavailable = null) {
+            let user_id = '';
+            if (unavailable) {
+                user_id = null;
+            } else {
+                user_id = modalUserId ?  modalUserId : this.$page.props.user.id;
+            }
 
             const signupData = {
                 user_id: user_id,
                 date: this.date,
                 station_id: this.item.station_id,
                 am_pm: this.item.am_pm,
+                unavailable: unavailable,
                 redirectRoute: 'shifts.calendar'
             }
 

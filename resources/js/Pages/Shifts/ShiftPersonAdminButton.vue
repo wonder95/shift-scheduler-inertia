@@ -25,7 +25,7 @@ export default {
         displayText() {
             let text = '';
             if (this.personItem.hasOwnProperty('id')) {
-                text = this.personItem.user.name;
+                text = this.personItem.user_id ? this.personItem.user.name : 'Unavailable';
             } else {
                 text = 'Add Person'
             }

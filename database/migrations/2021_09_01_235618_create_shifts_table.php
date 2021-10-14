@@ -17,6 +17,7 @@ class CreateShiftsTable extends Migration
             $table->id();
             $table->date('date');
             $table->foreignId('user_id')
+                ->nullable()
                 ->references('id')
                 ->on('users');
 
@@ -24,7 +25,7 @@ class CreateShiftsTable extends Migration
                 ->references('id')
                 ->on('stations');
             $table->enum('am_pm', ['am', 'pm'])->default('pm');
-            $table->boolean('unavailable');
+            $table->boolean('unavailable')->default(0);
             $table->timestamps();
         });
     }
