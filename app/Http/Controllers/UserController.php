@@ -14,11 +14,21 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'users' => User::all()
+            'users' => User::all()->where('status', 1)->map(fn($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'type' => $user->type,
+                    'status' => $user->status,
+                    'isAdmin' => $user->isAdmin(),
+                    'isSupport' => $user->isSupport(),
+                    'isSuppression' => $user->isSuppression(),
+                ]),
         ]);
     }
 
-    public function userList() {
+    public function userList()
+    {
         return User::all();
     }
 
@@ -26,7 +36,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/CreateJS', [
             'users' => User::all(),
-            'stations' => Station::all()
+            'stations' => Station::all(),
         ]);
     }
 
@@ -39,7 +49,7 @@ class UserController extends Controller
             'name' => request('name'),
             'type' => request('type'),
             'email' => request('email'),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         ]);
 
         $user->contact()->create([
